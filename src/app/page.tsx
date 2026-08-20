@@ -11,8 +11,11 @@ import { Footer } from "@/components/Footer";
 export default function Home() {
   return (
     <>
+      <a href="#main" className="skip-link">
+        Skip to content
+      </a>
       <Navbar />
-      <main style={{ position: "relative", zIndex: 2 }}>
+      <main id="main" style={{ position: "relative", zIndex: 2 }}>
         <Hero />
         <About />
         <Technologies />

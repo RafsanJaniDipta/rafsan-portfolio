@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap");
+/* Fonts are loaded by next/font in app/layout.tsx — no @import needed here. */
 
 @theme {
   --color-bg: #0a0a0a;
@@ -10,7 +10,7 @@
   --color-line-2: #2a2a2a;
   --color-fg: #e6e6e6;
   --color-fg-dim: #8a8a8a;
-  --color-fg-mute: #5a5a5a;
+  --color-fg-mute: #7d7d7d;
   --color-accent: #10b981;
   --color-accent-dim: #047857;
   --color-warn: #f59e0b;
@@ -30,7 +30,7 @@
   --color-line-2: #2a2a2a;
   --color-fg: #e6e6e6;
   --color-fg-dim: #8a8a8a;
-  --color-fg-mute: #5a5a5a;
+  --color-fg-mute: #7d7d7d;
   --color-accent: #10b981;
   --color-accent-dim: #047857;
   --color-warn: #f59e0b;
@@ -40,9 +40,17 @@
   --scanline-color: rgba(16,185,129,0.012);
 }
 
-/* Smooth color transitions across all elements */
-*, *::before, *::after {
-  transition: background-color 0.35s ease, border-color 0.35s ease, color 0.3s ease, box-shadow 0.3s ease;
+/*
+  Smooth colour transitions when the theme flips.
+  Scoped to a class the ThemeProvider adds for the duration of the swap —
+  applying this to every element permanently was costing paint on scroll.
+*/
+.theme-transition,
+.theme-transition *,
+.theme-transition *::before,
+.theme-transition *::after {
+  transition: background-color 0.35s ease, border-color 0.35s ease,
+    color 0.3s ease, box-shadow 0.3s ease !important;
 }
 
 /* ── Light mode ── */
@@ -54,7 +62,7 @@
   --color-line-2: #c4c3be;
   --color-fg: #1a1a1a;
   --color-fg-dim: #4a4a4a;
-  --color-fg-mute: #8a8a8a;
+  --color-fg-mute: #6b6b6b;
   --color-accent: #059669;
   --color-accent-dim: #6ee7b7;
   --color-warn: #d97706;
@@ -135,4 +143,64 @@ body::after {
 
 .dot-pulse {
   animation: pulse 2s infinite;
+}
+
+/* ── Keyboard focus ──
+   Every interactive element here is styled through mouse events, which left
+   keyboard users with no visible focus at all. :focus-visible only fires for
+   keyboard/AT navigation, so mouse users see no change. */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* Skip link — first tab stop, hidden until focused */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  background: var(--color-accent);
+  color: #000;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 0 0 4px 0;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  left: 0;
+}
+
+/* ── Reduced motion ──
+   GSAP loops, Lenis smooth scroll and the typewriter are all gated in JS too;
+   this covers the CSS-driven animations. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  body::after {
+    display: none;
+  }
 }
