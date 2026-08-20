@@ -1,13 +1,15 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import { motion, useInView } from "framer-motion";
+import { PROFILE_PHOTO } from "@/lib/profile";
 
 const stats = [
-  { label: "Projects shipped", value: "3+", sub: "in production" },
-  { label: "Bootcamp grade", value: "100%", sub: "· 5/5" },
+  { label: "Projects shipped", value: "3", sub: "in production" },
+  { label: "Live deployments", value: "3", sub: "· Vercel / Netlify" },
   { label: "Years coding", value: "2+" },
-  { label: "Coffee / day", value: "∞" },
+  { label: "Technologies", value: "16" },
 ];
 
 export function About() {
@@ -83,9 +85,12 @@ export function About() {
                   zIndex: 1,
                 }}
               >
-                <img
-                  src="/rafsan-profile.jfif"
+                <Image
+                  src={PROFILE_PHOTO}
                   alt="Rafsan Jani Dipta"
+                  width={72}
+                  height={72}
+                  sizes="72px"
                   style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                 />
               </div>
@@ -121,7 +126,7 @@ export function About() {
                 borderBottom: "1px solid var(--color-line)",
               }}
             >
-              // $ tree -L 2 ~/rafsan
+              {"// $ tree -L 2 ~/rafsan"}
             </div>
             <div style={{ color: "var(--color-accent)", fontWeight: 500 }}>
               rafsan/
@@ -158,7 +163,7 @@ export function About() {
                 availability
                 <span style={{ color: "var(--color-fg-mute)" }}>.json</span>
                 {" "}
-                <span style={{ color: "var(--color-accent)" }}>// open</span>
+                <span style={{ color: "var(--color-accent)" }}>{"// open"}</span>
               </TreeRow>
             </div>
           </div>
@@ -277,7 +282,7 @@ export function About() {
               fontStyle: "italic",
             }}
           >
-            // currently looking for: junior / mid frontend or fullstack roles
+            {"// currently looking for: junior / mid frontend or fullstack roles"}
           </p>
         </motion.div>
       </div>
@@ -310,7 +315,7 @@ export function SectionLabel({
         gap: "12px",
       }}
     >
-      <span style={{ color: "var(--color-fg-mute)" }}>//</span>
+      <span style={{ color: "var(--color-fg-mute)" }}>{"//"}</span>
       {index} / {label}
       <span
         style={{

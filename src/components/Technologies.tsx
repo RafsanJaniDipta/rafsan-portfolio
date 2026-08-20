@@ -66,7 +66,7 @@ export function Technologies() {
           marginBottom: "48px",
         }}
       >
-        // tools and technologies I work with
+        {"// tools and technologies I work with"}
       </motion.p>
 
       <div
@@ -141,11 +141,17 @@ function TechCard({ tech }: { tech: { name: string; icon: string } }) {
           padding: "16px",
         }}
       >
+        {/* Plain <img>: these are tiny remote SVGs — next/image would proxy
+            16 external requests through the optimizer for no size win. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={tech.icon}
-          alt={tech.name}
+          alt=""
+          aria-hidden="true"
           width={36}
           height={36}
+          loading="lazy"
+          decoding="async"
           style={{
             width: "36px",
             height: "36px",

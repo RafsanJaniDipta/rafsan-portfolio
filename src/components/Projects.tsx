@@ -13,7 +13,7 @@ const PROJECTS = [
     desc: "Full-stack herbal e-commerce platform with auth, cart, orders, and an admin dashboard. Live on Vercel.",
     tech: ["Next.js", "Node.js", "PostgreSQL", "Prisma", "Better Auth", "Google OAuth", "Tailwind"],
     live: "https://greenroots-mauve.vercel.app",
-    repo: "https://github.com/Rafsan41/L2B6A5-GreenRoots-Client",
+    repo: "https://github.com/RafsanJaniDipta/L2B6A5-GreenRoots-Client",
     liveUrl: "greenroots-mauve.vercel.app",
     preview: <GreenRootsPreview />,
     challenges: "Integrating Better Auth with Google OAuth while maintaining role-based access control across admin and user flows was the trickiest part — required careful session handling and middleware guards.",
@@ -27,7 +27,7 @@ const PROJECTS = [
     desc: "Multi-role medicine e-commerce platform with separate Admin, Seller, and Customer dashboards. Features inventory management, order tracking, prescription uploads, and secure checkout — deployed live on Vercel.",
     tech: ["Next.js", "Node.js", "PostgreSQL", "Prisma", "Tailwind", "RBAC"],
     live: "https://medicinestores.vercel.app",
-    repo: "https://github.com/Rafsan41/L2B6A4",
+    repo: "https://github.com/RafsanJaniDipta/L2B6A4",
     liveUrl: "medicinestores.vercel.app",
     preview: <MediStorePreview />,
     challenges: "Designing a clean RBAC system where Admin, Seller, and Customer have isolated views with shared routes was complex — solved with middleware-level role guards and per-role layout wrappers.",
@@ -41,7 +41,7 @@ const PROJECTS = [
     desc: "A comprehensive plant care tracking platform built with React and Firebase, featuring user authentication, plant profile management, and custom care reminders.",
     tech: ["React.js", "Firebase", "Tailwind CSS"],
     live: "https://vaincare.netlify.app/",
-    repo: "https://github.com/Rafsan41/b11a10-plant-care-tracking-Client-side",
+    repo: "https://github.com/RafsanJaniDipta/b11a10-plant-care-tracking-Client-side",
     liveUrl: "https://vaincare.netlify.app/",
     preview: <PortfolioPreview />,
     challenges: "Designing a clean UI for a plant care tracking platform with React and Firebase required careful state management for plant profiles and care reminders. Maintaining responsiveness and a visually appealing layout without external UI libraries while ensuring smooth user interactions and data persistence was the main challenge — addressed by implementing a modular component structure and utilizing CSS variables for consistent styling.",
@@ -313,7 +313,7 @@ function ProjectCard({ project }: { project: (typeof PROJECTS)[number] }) {
                   letterSpacing: "0.12em",
                   marginBottom: "5px",
                 }}>
-                  // challenges_faced
+                  {"// challenges_faced"}
                 </div>
                 <p style={{
                   fontFamily: "var(--font-mono)",
@@ -336,7 +336,7 @@ function ProjectCard({ project }: { project: (typeof PROJECTS)[number] }) {
                   letterSpacing: "0.12em",
                   marginBottom: "5px",
                 }}>
-                  // future_plans
+                  {"// future_plans"}
                 </div>
                 <p style={{
                   fontFamily: "var(--font-mono)",
@@ -477,5 +477,5 @@ function MediStorePreview() {
 }
 
 function PortfolioPreview() {
-  return <SitePreview url="https://rafsandev.vercel.app" fallback="/rafsan-profile.jfif" />;
+  return <SitePreview url="https://vaincare.netlify.app/" fallback="/rafsan-profile.jfif" />;
 }
