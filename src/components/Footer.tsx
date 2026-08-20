@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { EMAIL_URL, WHATSAPP_URL } from "@/lib/contact";
 
 export function Footer() {
   return (
@@ -36,9 +37,10 @@ export function Footer() {
         </div>
 
         <div style={{ display: "flex", gap: "18px", alignItems: "center" }}>
-          <FooterLink href="https://github.com/Rafsan41">github</FooterLink>
+          <FooterLink href="https://github.com/RafsanJaniDipta">github</FooterLink>
           <FooterLink href="https://x.com/RafsanJaniDipta">twitter</FooterLink>
-          <FooterLink href="mailto:rafsundipto116@gmail.com">email</FooterLink>
+          <FooterLink href={WHATSAPP_URL}>whatsapp</FooterLink>
+          <FooterLink href={EMAIL_URL}>email</FooterLink>
           <TopBtn />
         </div>
       </div>

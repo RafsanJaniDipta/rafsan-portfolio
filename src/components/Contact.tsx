@@ -3,6 +3,13 @@
 import { useRef, useState, FormEvent } from "react";
 import { motion, useInView } from "framer-motion";
 import { SectionLabel } from "./About";
+import {
+  EMAIL,
+  EMAIL_URL,
+  PHONE_DISPLAY,
+  PHONE_URL,
+  WHATSAPP_URL,
+} from "@/lib/contact";
 
 export function Contact() {
   const ref = useRef(null);
@@ -10,21 +17,46 @@ export function Contact() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [company, setCompany] = useState(""); // honeypot
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [error, setError] = useState("");
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
+    if (status === "sending") return;
+
     if (!name.trim() || !email.trim() || !message.trim()) {
+      setError("all fields required");
       setStatus("error");
       return;
     }
+
     setStatus("sending");
-    setTimeout(() => {
+    setError("");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, message, company }),
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        setError(data.error || "couldn't send — please email me directly");
+        setStatus("error");
+        return;
+      }
+
       setStatus("sent");
       setName("");
       setEmail("");
       setMessage("");
-    }, 900);
+    } catch {
+      setError("network error — please email me directly");
+      setStatus("error");
+    }
   }
 
   return (
@@ -66,7 +98,7 @@ export function Contact() {
           marginBottom: "40px",
         }}
       >
-        // Let&apos;s work together. Drop me a message or reach out directly.
+        {"// Let's work together. Drop me a message or reach out directly."}
       </motion.p>
 
       <div
@@ -99,7 +131,7 @@ export function Contact() {
               marginBottom: "20px",
             }}
           >
-            // new_message.send()
+            {"// new_message.send()"}
           </div>
 
           <FormField
@@ -160,9 +192,29 @@ export function Contact() {
             />
           </div>
 
-          <SubmitBtn />
+          {/* Honeypot — hidden from humans, catches naive bots */}
+          <input
+            type="text"
+            name="company"
+            value={company}
+            onChange={(e) => setCompany(e.target.value)}
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              left: "-9999px",
+              width: "1px",
+              height: "1px",
+              opacity: 0,
+            }}
+          />
+
+          <SubmitBtn sending={status === "sending"} />
 
           <div
+            role="status"
+            aria-live="polite"
             style={{
               fontFamily: "var(--font-mono)",
               fontSize: "12px",
@@ -174,7 +226,7 @@ export function Contact() {
                   : "var(--color-accent)",
             }}
           >
-            {status === "error" && "✗ all fields required"}
+            {status === "error" && `✗ ${error}`}
             {status === "sending" && "▸ sending..."}
             {status === "sent" && "✓ message sent. response within 24h."}
           </div>
@@ -192,21 +244,21 @@ export function Contact() {
           }}
         >
           <ContactLink
-            href="mailto:rafsundipto116@gmail.com"
+            href={EMAIL_URL}
             channel="email"
-            handle="rafsundipto116@gmail.com"
+            handle={EMAIL}
             icon={<EmailIcon />}
           />
           <ContactLink
-            href="tel:+8801325252970"
+            href={PHONE_URL}
             channel="phone"
-            handle="+880 1325-252970"
+            handle={PHONE_DISPLAY}
             icon={<PhoneIcon />}
           />
           <ContactLink
-            href="https://wa.me/8801776610116"
+            href={WHATSAPP_URL}
             channel="whatsapp"
-            handle="+880 1776-610116"
+            handle={PHONE_DISPLAY}
             icon={<WhatsAppIcon />}
           />
           <ContactLink
@@ -216,9 +268,9 @@ export function Contact() {
             icon={<LinkedInIcon />}
           />
           <ContactLink
-            href="https://github.com/Rafsan41"
+            href="https://github.com/RafsanJaniDipta"
             channel="github"
-            handle="@Rafsan41"
+            handle="@RafsanJaniDipta"
             icon={<GithubIcon />}
           />
           <ContactLink
@@ -245,7 +297,7 @@ export function Contact() {
                 marginBottom: "6px",
               }}
             >
-              // status
+              {"// status"}
             </div>
             <div>
               <span style={{ color: "var(--color-fg-dim)" }}>availability:</span>{" "}
@@ -333,11 +385,12 @@ function FormField({
   );
 }
 
-function SubmitBtn() {
+function SubmitBtn({ sending }: { sending: boolean }) {
   const [h, setH] = useState(false);
   return (
     <button
       type="submit"
+      disabled={sending}
       onMouseEnter={() => setH(true)}
       onMouseLeave={() => setH(false)}
       style={{
@@ -348,7 +401,8 @@ function SubmitBtn() {
         border: `1px solid ${h ? "var(--color-fg)" : "var(--color-accent)"}`,
         background: h ? "var(--color-fg)" : "var(--color-accent)",
         color: "#000",
-        cursor: "pointer",
+        cursor: sending ? "not-allowed" : "pointer",
+        opacity: sending ? 0.6 : 1,
         transition: "all 0.2s",
         fontWeight: 600,
         display: "flex",
@@ -358,7 +412,7 @@ function SubmitBtn() {
         borderRadius: "2px",
       }}
     >
-      <span>Send Message</span>
+      <span>{sending ? "Sending" : "Send Message"}</span>
       <span>→</span>
     </button>
   );
