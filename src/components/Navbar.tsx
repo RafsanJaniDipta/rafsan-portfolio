@@ -19,9 +19,6 @@ export function Navbar() {
   const { theme, toggle } = useTheme();
 
   const isDark = theme === "dark";
-  const navBg = scrolled
-    ? isDark ? "rgba(8,8,8,0.85)" : "rgba(245,245,240,0.88)"
-    : isDark ? "rgba(8,8,8,0.45)" : "rgba(245,245,240,0.55)";
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 20);
@@ -31,6 +28,7 @@ export function Navbar() {
 
   return (
     <motion.nav
+      className={`site-nav${scrolled ? " is-scrolled" : ""}`}
       initial={{ y: -60, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
@@ -42,9 +40,7 @@ export function Navbar() {
         zIndex: 50,
         backdropFilter: "blur(20px) saturate(180%)",
         WebkitBackdropFilter: "blur(20px) saturate(180%)",
-        background: navBg,
         borderBottom: `1px solid var(--color-line)`,
-        boxShadow: scrolled ? `0 8px 32px ${isDark ? "rgba(0,0,0,0.4)" : "rgba(0,0,0,0.08)"}` : "none",
         fontFamily: "var(--font-mono)",
         fontSize: "13px",
         transition: "background 0.3s",

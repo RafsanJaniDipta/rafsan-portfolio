@@ -204,3 +204,73 @@ textarea:focus-visible {
     display: none;
   }
 }
+
+/* ── Theme-dependent visuals ──
+   These were inline `isDark ? … : …` ternaries driven by React state, which
+   does not match [data-theme] until after hydration — so a visitor whose
+   saved theme was light got a light page with dark photo, name and navbar.
+   Driving them from CSS makes them correct on the very first paint. */
+
+.hero-photo {
+  filter: grayscale(20%) contrast(1.08) brightness(0.88);
+}
+[data-theme="light"] .hero-photo {
+  filter: grayscale(0%) contrast(1.02) brightness(1.02);
+}
+
+.hero-scrim {
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 10, 10, 0.25) 0%,
+    rgba(10, 10, 10, 0.3) 40%,
+    rgba(10, 10, 10, 0.55) 100%
+  );
+}
+[data-theme="light"] .hero-scrim {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.03) 40%,
+    rgba(245, 245, 240, 0.28) 100%
+  );
+}
+
+.hero-name {
+  color: #ffffff;
+  text-shadow: 0 2px 40px rgba(0, 0, 0, 0.95), 0 0 60px rgba(16, 185, 129, 0.35);
+}
+[data-theme="light"] .hero-name {
+  color: #0d0d0d;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.18), 0 0 40px rgba(5, 150, 105, 0.2);
+}
+
+.hero-name-ghost {
+  color: rgba(255, 255, 255, 0.42);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.8);
+}
+[data-theme="light"] .hero-name-ghost {
+  color: rgba(0, 0, 0, 0.38);
+  text-shadow: 0 1px 8px rgba(255, 255, 255, 0.6);
+}
+
+.hero-quote {
+  background: rgba(12, 12, 12, 0.88);
+}
+[data-theme="light"] .hero-quote {
+  background: rgba(245, 245, 240, 0.92);
+}
+
+.site-nav {
+  background: rgba(8, 8, 8, 0.45);
+}
+.site-nav.is-scrolled {
+  background: rgba(8, 8, 8, 0.85);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+[data-theme="light"] .site-nav {
+  background: rgba(245, 245, 240, 0.55);
+}
+[data-theme="light"] .site-nav.is-scrolled {
+  background: rgba(245, 245, 240, 0.88);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}

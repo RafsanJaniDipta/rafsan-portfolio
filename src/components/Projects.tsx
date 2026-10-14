@@ -6,8 +6,22 @@ import { SectionLabel } from "./About";
 
 const PROJECTS = [
   {
-    id: "greenroots",
+    id: "noorventure",
     file: "project_01.tsx",
+    name: "NoorVenture",
+    symbol: "▸",
+    desc: "Full-stack ethical investing platform built on Musharakah — true profit & loss sharing, not interest. Multi-role auth (investor / business owner / admin), AI Shariah screening, live deal funding with realtime updates, audited profit reports, and a returns + zakat calculator.",
+    tech: ["Next.js 16", "TypeScript", "Tailwind CSS", "Express", "PostgreSQL", "Prisma", "Better Auth", "Socket.IO", "Claude AI"],
+    live: "https://noorventure-client.vercel.app",
+    repo: "https://github.com/RafsanJaniDipta/Noor-Venture-Client",
+    liveUrl: "noorventure-client.vercel.app",
+    preview: <NoorVenturePreview />,
+    challenges: "Modelling Musharakah profit/loss share and zakat correctly, then keeping three role-based dashboards (investor, business owner, admin) in sync through realtime funding updates without over-fetching — solved with a single React Query cache layer, auth-aware middleware, and Socket.IO events.",
+    future: "Automated monthly P&L ingestion, a public audit log for every proposal, multi-currency wallet support, and a React Native companion app.",
+  },
+  {
+    id: "greenroots",
+    file: "project_02.tsx",
     name: "GreenRoots",
     symbol: "▸",
     desc: "Full-stack herbal e-commerce platform with auth, cart, orders, and an admin dashboard. Live on Vercel.",
@@ -21,7 +35,7 @@ const PROJECTS = [
   },
   {
     id: "medistore",
-    file: "project_02.tsx",
+    file: "project_03.tsx",
     name: "MediStore",
     symbol: "▸",
     desc: "Multi-role medicine e-commerce platform with separate Admin, Seller, and Customer dashboards. Features inventory management, order tracking, prescription uploads, and secure checkout — deployed live on Vercel.",
@@ -35,7 +49,7 @@ const PROJECTS = [
   },
   {
     id: "portfolio",
-    file: "project_03.tsx",
+    file: "project_04.tsx",
     name: "Vain Care(A Plant Care Tracking System)",
     symbol: "▸",
     desc: "A comprehensive plant care tracking platform built with React and Firebase, featuring user authentication, plant profile management, and custom care reminders.",
@@ -468,6 +482,10 @@ function SitePreview({ url, fallback }: { url: string; fallback: string }) {
   );
 }
 
+function NoorVenturePreview() {
+  return <SitePreview url="https://noorventure-client.vercel.app" fallback="/noorventure_1.jpg" />;
+}
+
 function GreenRootsPreview() {
   return <SitePreview url="https://greenroots-mauve.vercel.app" fallback="/greenRoots_1.jpg" />;
 }
@@ -477,5 +495,5 @@ function MediStorePreview() {
 }
 
 function PortfolioPreview() {
-  return <SitePreview url="https://vaincare.netlify.app/" fallback="/rafsan-profile.jfif" />;
+  return <SitePreview url="https://vaincare.netlify.app/" fallback="/vaincare.jpg" />;
 }

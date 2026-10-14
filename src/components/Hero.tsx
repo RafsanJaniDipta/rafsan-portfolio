@@ -177,7 +177,9 @@ export function Hero() {
           ref={nameRef}
           style={{
             position: "absolute",
-            top: "28%",
+            // The right column is bottom-anchored and grows upward when
+            // the CTA row wraps, so the name must sit high enough to clear it.
+            top: "15%",
             left: "58%",
             transform: "translate(-50%, -50%)",
             zIndex: 10,
@@ -191,6 +193,7 @@ export function Hero() {
           }}>
           {/* Bold RAFSAN — highlighted */}
           <div
+            className="hero-name"
             style={{
               fontFamily: "var(--font-sans)",
               fontSize: "clamp(52px, 6.5vw, 96px)",
@@ -198,29 +201,21 @@ export function Hero() {
               letterSpacing: "0.12em",
               lineHeight: 1,
               textTransform: "uppercase",
-              // Dark: white with green glow | Light: dark with accent underline glow
-              color: isDark ? "#ffffff" : "#0d0d0d",
-              textShadow: isDark
-                ? "0 2px 40px rgba(0,0,0,0.95), 0 0 60px rgba(16,185,129,0.35)"
-                : "0 2px 24px rgba(0,0,0,0.18), 0 0 40px rgba(5,150,105,0.2)",
             }}>
             Rafsan
           </div>
 
           {/* Ghost "Jani Dipta" */}
           <div
+            className="hero-name-ghost"
             style={{
               fontFamily: "var(--font-sans)",
               fontSize: "clamp(18px, 2.2vw, 32px)",
               fontWeight: 300,
-              color: isDark ? "rgba(255,255,255,0.42)" : "rgba(0,0,0,0.38)",
               letterSpacing: "0.35em",
               lineHeight: 1,
               marginTop: "18px",
               textTransform: "uppercase",
-              textShadow: isDark
-                ? "0 1px 12px rgba(0,0,0,0.8)"
-                : "0 1px 8px rgba(255,255,255,0.6)",
             }}>
             J a n i &nbsp; D i p t a
           </div>
@@ -255,20 +250,19 @@ export function Hero() {
               fill
               priority
               sizes="(max-width: 900px) 90vw, 420px"
+              className="hero-photo"
               style={{
                 objectFit: "cover",
                 objectPosition: "center top",
-                filter: "grayscale(20%) contrast(1.08) brightness(0.88)",
               }}
             />
 
             {/* Gradient overlay */}
             <div
+              className="hero-scrim"
               style={{
                 position: "absolute",
                 inset: 0,
-                background:
-                  "linear-gradient(to bottom, rgba(10,10,10,0.25) 0%, rgba(10,10,10,0.3) 40%, rgba(10,10,10,0.55) 100%)",
               }}
             />
           </motion.div>
@@ -281,13 +275,11 @@ export function Hero() {
             initial={{ opacity: 0, y: 14 }}
             animate={mounted ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 1.0 }}
+            className="hero-quote"
             style={{
               position: "absolute",
               bottom: "10%",
               left: "6%",
-              background: isDark
-                ? "rgba(12,12,12,0.88)"
-                : "rgba(245,245,240,0.92)",
               backdropFilter: "blur(14px)",
               border: "1px solid var(--color-line-2)",
               borderRadius: "8px",
@@ -348,6 +340,10 @@ export function Hero() {
             padding: "60px 32px 72px 40px",
             gap: "20px",
           }}>
+          {/* Intro block: the typing line and the meta rows read as one
+              group, so they share a single even gap rather than inheriting
+              the column's wider 20px spacing between the first two. */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
           {/* Cycling text animation */}
           <motion.div
             initial={{ opacity: 0, x: 16 }}
@@ -374,7 +370,7 @@ export function Hero() {
             style={{
               display: "flex",
               flexDirection: "column",
-              gap: "5px",
+              gap: "8px",
               fontFamily: "var(--font-mono)",
               fontSize: "12px",
             }}>
@@ -389,6 +385,7 @@ export function Hero() {
               </div>
             ))}
           </motion.div>
+          </div>
 
           {/* CTA Buttons */}
           <motion.div
